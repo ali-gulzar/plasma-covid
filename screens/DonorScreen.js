@@ -21,7 +21,7 @@ const actions = [
   }
 ];
 
-export default function HomeScreen() {
+export default function DonorScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -38,7 +38,7 @@ export default function HomeScreen() {
   );
 }
 
-HomeScreen.navigationOptions = {
+DonorScreen.navigationOptions = {
   header: null,
 };
 
