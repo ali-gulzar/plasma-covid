@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
@@ -24,6 +24,9 @@ const actions = [
 export default function DonorScreen() {
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Covid Plasma Finder</Text>
+      </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
       </ScrollView>
@@ -47,6 +50,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginTop: 30
+  },
+  header: {
+    fontSize: 20,
+    fontFamily: 'space-mono'
   },
   contentContainer: {
     paddingTop: 30,
