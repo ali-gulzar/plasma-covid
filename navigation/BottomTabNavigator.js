@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
+import { Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 
-import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -12,7 +13,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  navigation.setOptions({ headerShown: false });
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -20,29 +21,40 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'Donors',
+          tabBarIcon: ({ focused }) => <DonorIcon focused={focused} name="ios-people" />,
         }}
       />
       <BottomTab.Screen
         name="Links"
         component={LinksScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'Statistics',
+          tabBarIcon: ({ focused }) => <StatisticsIcon focused={focused} name="graph" />,
         }}
       />
     </BottomTab.Navigator>
   );
 }
 
-function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+function DonorIcon(props) {
+  return (
+    <Ionicons
+      name={props.name}
+      size={40}
+      style={{ marginBottom: -3 }}
+      color={props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+    />
+  );
+}
 
-  switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
-  }
+function StatisticsIcon(props) {
+  return (
+    <SimpleLineIcons
+      name={props.name}
+      size={40}
+      style={{ marginBottom: -3 }}
+      color={props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+    />
+  );
 }
