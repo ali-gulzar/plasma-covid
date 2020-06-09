@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons, AntDesign, Feather, MaterialIcons, Entypo } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import ElevatedView from 'react-native-elevated-view';
+import Toast from 'react-native-root-toast';
 
 import BecomeDonor from './DonorScreen/BecomeDonor';
 import DeleteInformation from './DonorScreen/DeleteInformation';
@@ -28,16 +29,33 @@ const actions = [
 export default function DonorScreen() {
   
   // const [data, setData] = React.useState([]);
-  const [showBecomeDonor, setShowBecomeDonor] = React.useState(true);
+  const [showBecomeDonor, setShowBecomeDonor] = React.useState(false);
   const [showDeleteInformation, setShowDeleteInformation] = React.useState(false);
 
   React.useEffect(() => {
     // console.warn("Working")
   })
 
-  function closeModal () {
-    setShowBecomeDonor(false);
-    setShowDeleteInformation(false);
+  function closeModal (which, message) {
+    if (which == "donor") {
+      setShowBecomeDonor(false);
+
+    } else {
+      setShowDeleteInformation(false);
+    }
+    if (message !== "close") {
+      Toast.show(message, {
+        duration: 1500,
+        position: 50,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        backgroundColor: "#2f95dc",
+        paddingTop: 20,
+        opacity: 0.95
+      });
+    }
   }
   
   function becomeDonor () {

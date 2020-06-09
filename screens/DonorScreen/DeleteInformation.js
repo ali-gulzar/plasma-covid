@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard } from 
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
+import Toast from 'react-native-root-toast';
 import * as firebase from 'firebase';
 
 const Form = t.form.Form;
@@ -52,12 +53,17 @@ export default function DeleteInformation(props) {
 
   function handleSubmit () {
     const value = form.getValue();
-    console.warn(value)
     if (value !== null) {
       setDisableButton(true);
       Keyboard.dismiss();
+      // Delete Information
+      const ref = firebase.database().ref('delete')
+      const key = ref.push().key;
+        ref.child(key).set({
+            value,
+      })
       setDisableButton(false);
-      props.close();
+      props.close("delete", "Request sent to delete personal information.");
     }
   }
 
@@ -65,7 +71,7 @@ export default function DeleteInformation(props) {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Delete Information</Text>
-        <TouchableOpacity onPress={() => props.close()}>
+        <TouchableOpacity onPress={() => props.close("delete", "close")}>
           <View style={styles.closeModalButton}>
             <Text style={{color: 'white'}}>X</Text>
           </View>

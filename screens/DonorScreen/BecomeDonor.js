@@ -4,6 +4,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
 import * as firebase from 'firebase';
+import Toast from 'react-native-root-toast';
 
 const Form = t.form.Form;
 
@@ -61,7 +62,6 @@ export default function BecomeDonor(props) {
 
   function handleSubmit () {
     const value = form.getValue();
-    console.warn(value)
     if (value !== null) {
       setDisableButton(true);
       Keyboard.dismiss();
@@ -71,7 +71,7 @@ export default function BecomeDonor(props) {
             value,
       })
       setDisableButton(false);
-      props.close();
+      props.close("donor",value.name + " added in the list of donors.");
     }
   }
 
@@ -79,7 +79,7 @@ export default function BecomeDonor(props) {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Become A Donor</Text>
-        <TouchableOpacity onPress={() => props.close()}>
+        <TouchableOpacity onPress={() => props.close("donor", "close")}>
           <View style={styles.closeModalButton}>
             <Text style={{color: 'white', fontFamily: 'space-mono'}}>X</Text>
           </View>
