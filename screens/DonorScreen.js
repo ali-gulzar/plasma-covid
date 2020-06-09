@@ -1,28 +1,65 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, Modal } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons, AntDesign, Feather, MaterialIcons, Entypo } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import ElevatedView from 'react-native-elevated-view'
 
+import BecomeDonor from './DonorScreen/BecomeDonor';
+import DeleteInformation from './DonorScreen/DeleteInformation';
+
 const actions = [
   {
     text: "Become a donor",
     icon: <AntDesign name="star" size={20} color="white"/>,
-    name: "camera",
+    name: "donor",
     position: 1,
     color: "#FF652F"
   },
   {
     text: "Delete your information",
     icon: <MaterialCommunityIcons name="delete-forever" size={20} color="white"/>,
-    name: "gallery",
+    name: "delete",
     position: 2,
     color: "#2f95dc"
   }
 ];
 
 export default function DonorScreen() {
+  
+  // const [data, setData] = React.useState([]);
+  const [showBecomeDonor, setShowBecomeDonor] = React.useState(false);
+  const [showDeleteInformation, setShowDeleteInformation] = React.useState(false);
+
+  function closeModal () {
+    setShowBecomeDonor(false);
+    setShowDeleteInformation(false);
+  }
+  
+  function becomeDonor () {
+    return(
+        <Modal animationType="slide" visible={showBecomeDonor} onRequestClose={() => setShowBecomeDonor(false)}>
+          <BecomeDonor close={closeModal} />
+        </Modal>
+    )
+  }
+  
+  function deleteInformation () {
+    return(
+        <Modal animationType="slide" visible={showDeleteInformation} onRequestClose={() => setShowDeleteInformation(false)}>
+          <DeleteInformation close={closeModal} />
+        </Modal>
+    )
+  }
+
+  function handlePress (name) {
+    if (name === "donor" ) {
+      setShowBecomeDonor(true);
+    } else if (name === "delete") {
+      setShowDeleteInformation(true);
+    }
+  }
+  
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -51,10 +88,12 @@ export default function DonorScreen() {
       <FloatingAction
         actions={actions}
         floatingIcon={<Feather name="plus" size={40} color="white"/>}
-        onPressItem={name => this.handlePress(name)}
+        onPressItem={name => handlePress(name)}
         showBackground={false}
         color="#1C3334"
       />
+      {becomeDonor()}
+      {deleteInformation()}
     </View>
   );
 }
@@ -62,7 +101,6 @@ export default function DonorScreen() {
 DonorScreen.navigationOptions = {
   header: null,
 };
-
 
 const styles = StyleSheet.create({
   container: {
