@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { StyleSheet, View, Text, Dimensions, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, Dimensions, Modal, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons, AntDesign, Feather, MaterialIcons, Entypo } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import ElevatedView from 'react-native-elevated-view';
 import Toast from 'react-native-root-toast';
+import * as firebase from 'firebase';
 
 import BecomeDonor from './DonorScreen/BecomeDonor';
 import DeleteInformation from './DonorScreen/DeleteInformation';
@@ -28,13 +29,20 @@ const actions = [
 
 export default function DonorScreen() {
   
-  // const [data, setData] = React.useState([]);
-  const [showBecomeDonor, setShowBecomeDonor] = React.useState(false);
-  const [showDeleteInformation, setShowDeleteInformation] = React.useState(false);
+  const [loadingData, setLoadingData] = useState(true); 
+  const [data, setData] = useState([{"key1": "value1"}]);
+  const [showBecomeDonor, setShowBecomeDonor] = useState(false);
+  const [showDeleteInformation, setShowDeleteInformation] = useState(false);
 
-  React.useEffect(() => {
-    // console.warn("Working")
-  })
+  useEffect(() => {
+    firebase.database().ref("donors").on('value', async function (snapshot) {
+      if (snapshot.val()) {
+        const fetchedData = Object.values(snapshot.val())
+        await setData(fetchedData);
+        setLoadingData(false);
+      }
+    })
+  }, [])
 
   function closeModal (which, message) {
     if (which == "donor") {
@@ -81,6 +89,14 @@ export default function DonorScreen() {
       setShowDeleteInformation(true);
     }
   }
+
+  function setCorrectBloodTypeString (string) {
+    if (string.includes("plus")) {
+      return string.replace("plus", "+")
+    } else {
+      return string.replace("minus", "-")
+    }
+  }
   
   return (
     <View style={styles.container}>
@@ -88,24 +104,26 @@ export default function DonorScreen() {
         <Text style={styles.header}>Covid Plasma Finder</Text>
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <ElevatedView elevation={3} style={styles.elevatedViewContainer}>
+        {loadingData ? <ActivityIndicator/> :
+          data.map((item, index) => <ElevatedView elevation={3} style={styles.elevatedViewContainer} key={index}>
             <View style={styles.nameContainer}>
               <MaterialIcons name="person" size={20} color="white" />
-              <Text style={styles.personName}>Muhammad Ali Gulzar</Text>
+              <Text style={styles.personName}>{item.name}</Text>
             </View>
             <View style={styles.nameContainer}>
               <Entypo name="drop" size={20} color="white"/>
-              <Text style={styles.personName}>B+</Text>
+              <Text style={styles.personName}>{setCorrectBloodTypeString(item.bloodType)}</Text>
             </View>
             <View style={styles.nameContainer}>
               <Entypo name="location" size={20} color="white"/>
-              <Text style={styles.personName}>Lahore</Text>
+              <Text style={styles.personName}>{item.location}</Text>
             </View>
             <View style={styles.nameContainer}>
               <MaterialIcons name="contact-phone" size={20} color="white"/>
-              <Text style={styles.contactNumber}>+923016826111</Text>
+              <Text style={styles.contactNumber}>{`+92${item.contactNumber}`}</Text>
             </View>
-        </ElevatedView>
+          </ElevatedView>)
+        }
       </ScrollView>
       <FloatingAction
         actions={actions}

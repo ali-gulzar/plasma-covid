@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard } from 
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
-import Toast from 'react-native-root-toast';
 import * as firebase from 'firebase';
 
 const Form = t.form.Form;

@@ -4,7 +4,6 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
 import * as firebase from 'firebase';
-import Toast from 'react-native-root-toast';
 
 const Form = t.form.Form;
 
@@ -68,7 +67,10 @@ export default function BecomeDonor(props) {
       const ref = firebase.database().ref('donors')
       const key = ref.push().key;
         ref.child(key).set({
-            value,
+          name: value.name,
+          bloodType: value.bloodType,
+          location: value.location,
+          contactNumber: value.contactNumber
       })
       setDisableButton(false);
       props.close("donor",value.name + " added in the list of donors.");
