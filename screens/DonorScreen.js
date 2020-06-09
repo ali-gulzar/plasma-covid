@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
+import ElevatedView from 'react-native-elevated-view'
 
 const actions = [
   {
@@ -28,7 +29,11 @@ export default function DonorScreen() {
         <Text style={styles.header}>Covid Plasma Finder</Text>
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
+        <ElevatedView elevation={3} style={styles.stayElevated}>
+          <TouchableOpacity>
+            <Text>Something</Text>
+          </TouchableOpacity>
+        </ElevatedView>
       </ScrollView>
       <FloatingAction
         actions={actions}
@@ -62,4 +67,11 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
+  stayElevated: {
+    width: Dimensions.get('window').width - 40,
+    height: 100,
+    marginLeft: 20,
+    backgroundColor: 'white',
+    borderRadius: 20
+  }
 });
