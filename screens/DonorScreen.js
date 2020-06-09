@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons, AntDesign, Feather, MaterialIcons, Entypo } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import ElevatedView from 'react-native-elevated-view'
 
@@ -29,10 +29,23 @@ export default function DonorScreen() {
         <Text style={styles.header}>Covid Plasma Finder</Text>
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <ElevatedView elevation={3} style={styles.stayElevated}>
-          <TouchableOpacity>
-            <Text>Something</Text>
-          </TouchableOpacity>
+        <ElevatedView elevation={3} style={styles.elevatedViewContainer}>
+            <View style={styles.nameContainer}>
+              <MaterialIcons name="person" size={20} color="white" />
+              <Text style={styles.personName}>Muhammad Ali Gulzar</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Entypo name="drop" size={20} color="white"/>
+              <Text style={styles.personName}>B+</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <Entypo name="location" size={20} color="white"/>
+              <Text style={styles.personName}>Lahore</Text>
+            </View>
+            <View style={styles.nameContainer}>
+              <MaterialIcons name="contact-phone" size={20} color="white"/>
+              <Text style={styles.contactNumber}>+923016826111</Text>
+            </View>
         </ElevatedView>
       </ScrollView>
       <FloatingAction
@@ -40,7 +53,7 @@ export default function DonorScreen() {
         floatingIcon={<Feather name="plus" size={40} color="white"/>}
         onPressItem={name => this.handlePress(name)}
         showBackground={false}
-        color="#272727"
+        color="#1C3334"
       />
     </View>
   );
@@ -67,11 +80,33 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
-  stayElevated: {
+  elevatedViewContainer: {
     width: Dimensions.get('window').width - 40,
-    height: 100,
+    height: 160,
     marginLeft: 20,
-    backgroundColor: 'white',
-    borderRadius: 20
+    backgroundColor: '#376E65',
+    borderRadius: 20,
+    justifyContent: 'space-evenly',
+    marginBottom: 10
+  },
+  button: {
+    width: Dimensions.get('window').width - 40,
+    height: 150,
+  },
+  nameContainer: {
+    flexDirection: 'row',
+    marginLeft: 30,
+  },
+  personName: {
+    fontSize: 15,
+    fontFamily: 'hello-brilliant',
+    marginLeft: (Dimensions.get('window').width - 20) / 3,
+    color: 'white'
+  },
+  contactNumber: {
+    fontSize: 15,
+    marginLeft: (Dimensions.get('window').width - 20) / 3,
+    fontWeight: '300',
+    color: 'white'
   }
 });
