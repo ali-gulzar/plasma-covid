@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     marginTop: 30
   },
   header: {
-    fontSize: 20,
+    fontSize: 25,
     fontFamily: 'space-mono'
   },
   contentContainer: {
