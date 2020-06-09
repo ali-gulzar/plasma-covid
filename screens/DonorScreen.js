@@ -28,8 +28,12 @@ const actions = [
 export default function DonorScreen() {
   
   // const [data, setData] = React.useState([]);
-  const [showBecomeDonor, setShowBecomeDonor] = React.useState(false);
+  const [showBecomeDonor, setShowBecomeDonor] = React.useState(true);
   const [showDeleteInformation, setShowDeleteInformation] = React.useState(false);
+
+  React.useEffect(() => {
+    // console.warn("Working")
+  })
 
   function closeModal () {
     setShowBecomeDonor(false);

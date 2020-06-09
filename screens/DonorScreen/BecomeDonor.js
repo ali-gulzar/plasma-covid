@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function BecomeDonor() {
+export default function BecomeDonor(props) {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Become A Donor</Text>
+        <TouchableOpacity onPress={() => props.close()}>
+          <View style={styles.closeModalButton}>
+            <Text>X</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
@@ -21,8 +26,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   headerContainer: {
-    alignItems: 'center',
-    marginTop: 30
+    marginTop: 30,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginLeft: 30,
+    marginRight: 20
   },
   header: {
     fontSize: 20,
@@ -30,5 +38,13 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 15,
+  },
+  closeModalButton: {
+    width: 30,
+    height: 30,
+    backgroundColor: 'red',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
