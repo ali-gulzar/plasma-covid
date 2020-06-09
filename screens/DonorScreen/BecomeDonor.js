@@ -79,11 +79,14 @@ export default function BecomeDonor(props) {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Become A Donor</Text>
-        <TouchableOpacity onPress={() => props.close("donor", "close")}>
-          <View style={styles.closeModalButton}>
-            <Text style={{color: 'white', fontFamily: 'space-mono'}}>X</Text>
-          </View>
-        </TouchableOpacity>
+        <ElevatedView elevation={10}>
+          <TouchableOpacity onPress={() => props.close("donor", "close")}>
+            <View style={styles.closeModalButton}>
+              <Text style={{color: 'white', fontFamily: 'space-mono'}}>X</Text>
+            </View>
+          </TouchableOpacity>
+        </ElevatedView>
+
       </View>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <Form type={Donor} ref={c => form = c} options={options}/>

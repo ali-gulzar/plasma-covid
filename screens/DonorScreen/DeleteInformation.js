@@ -71,11 +71,13 @@ export default function DeleteInformation(props) {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Delete Information</Text>
-        <TouchableOpacity onPress={() => props.close("delete", "close")}>
-          <View style={styles.closeModalButton}>
-            <Text style={{color: 'white'}}>X</Text>
-          </View>
-        </TouchableOpacity>
+        <ElevatedView elevation={10}>
+          <TouchableOpacity onPress={() => props.close("delete", "close")}>
+            <View style={styles.closeModalButton}>
+              <Text style={{color: 'white'}}>X</Text>
+            </View>
+          </TouchableOpacity>
+        </ElevatedView>
       </View>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <Form type={Donor} ref={c => form = c} options={options}/>
