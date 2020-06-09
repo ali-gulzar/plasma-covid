@@ -1,6 +1,27 @@
 import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import t from 'tcomb-form-native';
+
+const BloodTypes = t.enums({
+  Aplus: 'A+',
+  Aminus: 'A-',
+  Bplus: 'B+',
+  Bminus: 'B-',
+  Olus: 'O+',
+  Ominus: 'O-',
+  ABplus: 'AB+',
+  ABminus: 'AB-',
+});
+
+const Donor = t.struct({
+  name: t.String,
+  bloodType: BloodTypes,
+  location: t.String,
+  contact: t.Number
+});
+
+const Form = t.form.Form;
 
 export default function BecomeDonor(props) {
   return (
@@ -14,7 +35,7 @@ export default function BecomeDonor(props) {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
+        <Form type={Donor} />
       </ScrollView>
     </View>
   );
@@ -24,13 +45,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 20
   },
   headerContainer: {
-    marginTop: 30,
+    marginTop: 40,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 20
+    marginLeft: 10,
+    marginRight: 10
   },
   header: {
     fontSize: 20,
@@ -46,5 +68,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonContainer: {
+    backgroundColor:'red'
   }
 });

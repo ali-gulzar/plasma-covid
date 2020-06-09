@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Dimensions, Modal } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons, AntDesign, Feather, MaterialIcons, Entypo } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
-import ElevatedView from 'react-native-elevated-view'
+import ElevatedView from 'react-native-elevated-view';
 
 import BecomeDonor from './DonorScreen/BecomeDonor';
 import DeleteInformation from './DonorScreen/DeleteInformation';
@@ -28,7 +28,7 @@ const actions = [
 export default function DonorScreen() {
   
   // const [data, setData] = React.useState([]);
-  const [showBecomeDonor, setShowBecomeDonor] = React.useState(true);
+  const [showBecomeDonor, setShowBecomeDonor] = React.useState(false);
   const [showDeleteInformation, setShowDeleteInformation] = React.useState(false);
 
   React.useEffect(() => {
