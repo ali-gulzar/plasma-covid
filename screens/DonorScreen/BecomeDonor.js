@@ -81,7 +81,7 @@ export default function BecomeDonor(props) {
         <Text style={styles.header}>Become A Donor</Text>
         <TouchableOpacity onPress={() => props.close()}>
           <View style={styles.closeModalButton}>
-            <Text>X</Text>
+            <Text style={{color: 'white', fontFamily: 'space-mono'}}>X</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -89,7 +89,7 @@ export default function BecomeDonor(props) {
         <Form type={Donor} ref={c => form = c} options={options}/>
         <TouchableOpacity style={{alignItems: 'center'}} onPress={() => handleSubmit()} disabled={disableButton}>
           <ElevatedView elevation={5} style={styles.addInformationButton}>
-            {disableButton ? <ActivityIndicator/> : <Text>Become A Donor</Text>}
+            {disableButton ? <ActivityIndicator/> : <Text style={{color: 'white', fontFamily: 'space-mono'}}>Become A Donor</Text>}
           </ElevatedView>
         </TouchableOpacity>
       </ScrollView>
@@ -120,13 +120,13 @@ const styles = StyleSheet.create({
   closeModalButton: {
     width: 30,
     height: 30,
-    backgroundColor: 'red',
+    backgroundColor: '#FF652F',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   addInformationButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#FF652F',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,

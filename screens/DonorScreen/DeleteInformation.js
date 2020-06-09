@@ -67,7 +67,7 @@ export default function DeleteInformation(props) {
         <Text style={styles.header}>Delete Information</Text>
         <TouchableOpacity onPress={() => props.close()}>
           <View style={styles.closeModalButton}>
-            <Text>X</Text>
+            <Text style={{color: 'white'}}>X</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -75,7 +75,7 @@ export default function DeleteInformation(props) {
         <Form type={Donor} ref={c => form = c} options={options}/>
         <TouchableOpacity style={{alignItems: 'center'}} onPress={() => handleSubmit()} disabled={disableButton}>
           <ElevatedView elevation={5} style={styles.deleteInformationButton}>
-            {disableButton ? <ActivityIndicator/> : <Text>Delete</Text>}
+            {disableButton ? <ActivityIndicator/> : <Text style={{color: 'white', fontFamily: 'space-mono'}}>Delete</Text>}
           </ElevatedView>
         </TouchableOpacity>
       </ScrollView>
@@ -106,13 +106,13 @@ const styles = StyleSheet.create({
   closeModalButton: {
     width: 30,
     height: 30,
-    backgroundColor: 'red',
+    backgroundColor: '#2f95dc',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   deleteInformationButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#2f95dc',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
