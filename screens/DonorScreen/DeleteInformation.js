@@ -1,8 +1,66 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import t from 'tcomb-form-native';
+import ElevatedView from 'react-native-elevated-view';
+import * as firebase from 'firebase';
+
+const Form = t.form.Form;
+
+const BloodTypes = t.enums({
+  Aplus: 'A+',
+  Aminus: 'A-',
+  Bplus: 'B+',
+  Bminus: 'B-',
+  Olus: 'O+',
+  Ominus: 'O-',
+  ABplus: 'AB+',
+  ABminus: 'AB-',
+});
+
+const Donor = t.struct({
+  bloodType: BloodTypes,
+  contactNumber: t.Number
+});
+
+
+const formStyles = {
+  ...Form.stylesheet,
+  controlLabel: {
+    error: {
+      color: 'black'
+    }
+  }
+}
+
+const options = {
+  fields: {
+    bloodType: {
+      error: 'Please select your blood type.'
+    },
+    contactNumber: {
+      error: 'Please provide a valid phone number so that patients can contact you.',
+      maxLength: 11
+    },
+  },
+}
+
 
 export default function DeleteInformation(props) {
+
+  const [disableButton, setDisableButton] = React.useState(false);
+
+  function handleSubmit () {
+    const value = form.getValue();
+    console.warn(value)
+    if (value !== null) {
+      setDisableButton(true);
+      Keyboard.dismiss();
+      setDisableButton(false);
+      props.close();
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -13,8 +71,13 @@ export default function DeleteInformation(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <Form type={Donor} ref={c => form = c} options={options}/>
+        <TouchableOpacity style={{alignItems: 'center'}} onPress={() => handleSubmit()} disabled={disableButton}>
+          <ElevatedView elevation={5} style={styles.deleteInformationButton}>
+            {disableButton ? <ActivityIndicator/> : <Text>Delete</Text>}
+          </ElevatedView>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -24,20 +87,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 20
   },
   headerContainer: {
-    marginTop: 30,
+    marginTop: 40,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 20
+    marginLeft: 10,
+    marginRight: 10
   },
   header: {
     fontSize: 20,
     fontFamily: 'space-mono'
   },
   contentContainer: {
-    paddingTop: 15,
+    paddingTop: 30,
   },
   closeModalButton: {
     width: 30,
@@ -46,5 +110,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  deleteInformationButton: {
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+    height: 40,
+    borderRadius: 30,
+    width: Dimensions.get('window').width / 3,
   }
 });

@@ -1,7 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
+import ElevatedView from 'react-native-elevated-view';
+import * as firebase from 'firebase';
+
+const Form = t.form.Form;
 
 const BloodTypes = t.enums({
   Aplus: 'A+',
@@ -18,12 +22,59 @@ const Donor = t.struct({
   name: t.String,
   bloodType: BloodTypes,
   location: t.String,
-  contact: t.Number
+  contactNumber: t.Number
 });
 
-const Form = t.form.Form;
+
+const formStyles = {
+  ...Form.stylesheet,
+  controlLabel: {
+    error: {
+      color: 'black'
+    }
+  }
+}
+
+const options = {
+  fields: {
+    name: {
+      error: 'Please provide a name of the donor.'
+    },
+    bloodType: {
+      error: 'Please select your blood type.'
+    },
+    location: {
+      error: 'Patients can easily find you using your location.',
+    },
+    contactNumber: {
+      error: 'Please provide a valid phone number so that patients can contact you.',
+      maxLength: 11
+    },
+  },
+}
+
 
 export default function BecomeDonor(props) {
+
+  const [donor, setDonor] = React.useState([])
+  const [disableButton, setDisableButton] = React.useState(false);
+
+  function handleSubmit () {
+    const value = form.getValue();
+    console.warn(value)
+    if (value !== null) {
+      setDisableButton(true);
+      Keyboard.dismiss();
+      const ref = firebase.database().ref('donors')
+      const key = ref.push().key;
+        ref.child(key).set({
+            value,
+      })
+      setDisableButton(false);
+      props.close();
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -34,8 +85,13 @@ export default function BecomeDonor(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <Form type={Donor} />
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <Form type={Donor} ref={c => form = c} options={options}/>
+        <TouchableOpacity style={{alignItems: 'center'}} onPress={() => handleSubmit()} disabled={disableButton}>
+          <ElevatedView elevation={5} style={styles.addInformationButton}>
+            {disableButton ? <ActivityIndicator/> : <Text>Become A Donor</Text>}
+          </ElevatedView>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -59,7 +115,7 @@ const styles = StyleSheet.create({
     fontFamily: 'space-mono'
   },
   contentContainer: {
-    paddingTop: 15,
+    paddingTop: 30,
   },
   closeModalButton: {
     width: 30,
@@ -69,7 +125,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonContainer: {
-    backgroundColor:'red'
+  addInformationButton: {
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+    height: 40,
+    borderRadius: 30,
+    width: Dimensions.get('window').width / 2,
   }
 });
