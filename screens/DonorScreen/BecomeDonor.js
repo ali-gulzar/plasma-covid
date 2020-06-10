@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard, Alert } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
 import * as firebase from 'firebase';
-import cities from '../../assets/cities/data.json';
+import Toast from 'react-native-root-toast';
 
+import cities from '../../assets/cities/data.json';
 
 const Form = t.form.Form;
 
@@ -67,16 +68,21 @@ export default function BecomeDonor(props) {
     if (value !== null) {
       setDisableButton(true);
       Keyboard.dismiss();
-      const ref = firebase.database().ref('donors')
-      const key = ref.push().key;
-        ref.child(key).set({
-          name: value.name,
-          bloodType: value.bloodType,
-          location: value.location,
-          contactNumber: value.contactNumber
-      })
-      setDisableButton(false);
-      props.close("donor",value.name + " added in the list of donors.");
+      if (value.contactNumber.toString().length !== 10) {
+        Alert.alert(`${value.contactNumber} is not a valid phone number.`)
+        setDisableButton(false);
+      } else {
+        const ref = firebase.database().ref('donors')
+        const key = ref.push().key;
+          ref.child(key).set({
+            name: value.name,
+            bloodType: value.bloodType,
+            location: value.location,
+            contactNumber: value.contactNumber
+        })
+        setDisableButton(false);
+        props.close("donor",value.name + " added in the list of donors.");
+      }
     }
   }
 

@@ -33,6 +33,27 @@ export default function StatisticScreen() {
           source={require('../assets/animations/waitting.json')}
         /> :
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
+      <ElevatedView elevation={10} style={styles.cardContainer} >
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <AntDesign name="heart" size={80} color="white" style={{marginLeft: 20}} />
+            </View>
+            <View style={{marginRight: Dimensions.get('window').width / 20}}>
+              <Text style={styles.title}>
+                Total Recoveries
+              </Text>
+              <Text style={styles.value}>
+                {covidData.recovered}
+              </Text>
+              <Text style={styles.title}>
+                Recoveries Today
+              </Text>
+              <Text style={styles.value}>
+                {covidData.todayRecovered}
+              </Text>
+            </View>
+          </View>
+        </ElevatedView>
         <ElevatedView elevation={10} style={[styles.cardContainer, {backgroundColor: '#3B8BEB'}]}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
@@ -71,27 +92,6 @@ export default function StatisticScreen() {
               </Text>
               <Text style={styles.value}>
                 {covidData.todayDeaths}
-              </Text>
-            </View>
-          </View>
-        </ElevatedView>
-        <ElevatedView elevation={10} style={styles.cardContainer} >
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <AntDesign name="heart" size={80} color="white" style={{marginLeft: 20}} />
-            </View>
-            <View style={{marginRight: Dimensions.get('window').width / 20}}>
-              <Text style={styles.title}>
-                Total Recoveries
-              </Text>
-              <Text style={styles.value}>
-                {covidData.recovered}
-              </Text>
-              <Text style={styles.title}>
-                Recoveries Today
-              </Text>
-              <Text style={styles.value}>
-                {covidData.todayRecovered}
               </Text>
             </View>
           </View>
