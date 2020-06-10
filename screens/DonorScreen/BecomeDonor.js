@@ -128,13 +128,13 @@ const styles = StyleSheet.create({
   closeModalButton: {
     width: 30,
     height: 30,
-    backgroundColor: '#FF652F',
+    backgroundColor: "#C3073F",
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   addInformationButton: {
-    backgroundColor: '#FF652F',
+    backgroundColor: "#C3073F",
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,

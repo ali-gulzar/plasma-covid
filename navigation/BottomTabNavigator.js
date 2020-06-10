@@ -7,7 +7,7 @@ import StatisticScreen from '../screens/StatisticScreen';
 import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Statistics';
+const INITIAL_ROUTE_NAME = 'Donors';
 
 export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerShown: false });

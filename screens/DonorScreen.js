@@ -21,7 +21,7 @@ const actions = [
     icon: <AntDesign name="star" size={20} color="white"/>,
     name: "donor",
     position: 1,
-    color: "#FF652F"
+    color: "#C3073F"
   },
   {
     text: "Delete your information",
@@ -78,6 +78,8 @@ export default function DonorScreen() {
           })
         }
         await setData(fetchedData);
+        setLoadingData(false);
+      } else {
         setLoadingData(false);
       }
     })
@@ -189,7 +191,7 @@ export default function DonorScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Covid Plasma Finder</Text>
+        <Text style={styles.header}>Covid Plasma Pakistan</Text>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
@@ -213,7 +215,7 @@ export default function DonorScreen() {
         floatingIcon={<Feather name="plus" size={40} color="white"/>}
         onPressItem={name => handlePress(name)}
         showBackground={false}
-        color="#1C3334"
+        color="#282828"
       />
       {becomeDonor()}
       {deleteInformation()}
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width - 40,
     height: 160,
     marginLeft: 20,
-    backgroundColor: '#376E65',
+    backgroundColor: '#557A95',
     borderRadius: 20,
     justifyContent: 'space-evenly',
     marginBottom: 10
@@ -260,7 +262,7 @@ const styles = StyleSheet.create({
   },
   personName: {
     fontSize: 15,
-    fontFamily: 'hello-brilliant',
+    fontFamily: 'space-mono',
     marginLeft: (Dimensions.get('window').width - 20) / 3,
     color: 'white'
   },
