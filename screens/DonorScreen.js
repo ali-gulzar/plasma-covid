@@ -6,9 +6,13 @@ import { FloatingAction } from "react-native-floating-action";
 import ElevatedView from 'react-native-elevated-view';
 import Toast from 'react-native-root-toast';
 import * as firebase from 'firebase';
+import { Dropdown } from 'react-native-material-dropdown';
 
 import BecomeDonor from './DonorScreen/BecomeDonor';
 import DeleteInformation from './DonorScreen/DeleteInformation';
+import cities from '../assets/cities/value_data.json';
+
+var filter = require('lodash.filter');
 
 const actions = [
   {
@@ -30,19 +34,52 @@ const actions = [
 export default function DonorScreen() {
   
   const [loadingData, setLoadingData] = useState(true); 
-  const [data, setData] = useState([{"key1": "value1"}]);
+  const [data, setData] = useState([]);
   const [showBecomeDonor, setShowBecomeDonor] = useState(false);
   const [showDeleteInformation, setShowDeleteInformation] = useState(false);
+  const [filterBlood, setFilterBlood] = useState("");
+  const [filterCity, setFilterCity] = useState("");
+
+  const bloodTypes = [{
+    value: 'All'
+  }, {
+    value: 'A+',
+  }, {
+    value: 'A-',
+  }, {
+    value: 'B+',
+  }, {
+    value: 'B-',
+  }, {
+    value: 'O+',
+  }, {
+    value: 'O-',
+  }, {
+    value: 'AB+',
+  }, {
+    value: 'AB-',
+  }]
+  const pakCities = cities;
 
   useEffect(() => {
     firebase.database().ref("donors").on('value', async function (snapshot) {
       if (snapshot.val()) {
-        const fetchedData = Object.values(snapshot.val())
+        let fetchedData = Object.values(snapshot.val());
+        if (filterBlood !== "" && filterBlood !== "All") {
+          fetchedData = filter(fetchedData, function (o) {
+            return setCorrectBloodTypeString(o.bloodType) == filterBlood
+          })
+        }
+        if (filterCity !== "" && filterCity !== "All") {
+          fetchedData = filter(fetchedData, function (o) {
+            return setCorrectBloodTypeString(o.location) == filterCity
+          })
+        }
         await setData(fetchedData);
         setLoadingData(false);
       }
     })
-  }, [])
+  }, [filterBlood, filterCity])
 
   function closeModal (which, message) {
     if (which == "donor") {
@@ -97,13 +134,34 @@ export default function DonorScreen() {
       return string.replace("minus", "-")
     }
   }
+
+  function filterCityData (value) {
+    setFilterCity(value);
+  }
   
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Covid Plasma Finder</Text>
       </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
+          <Dropdown
+            ref={c => blood = c}
+            label='Select Blood Type'
+            data={bloodTypes}
+            onChangeText={value => setFilterBlood(value)}
+          />
+        </View>
+        <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
+          <Dropdown
+            label='Select City'
+            data={pakCities}
+            onChangeText={value =>   setFilterCity(value)}
+          />
+        </View>
+      </View>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
         {loadingData ? <ActivityIndicator/> :
           data.map((item, index) => <ElevatedView elevation={3} style={styles.elevatedViewContainer} key={index}>
             <View style={styles.nameContainer}>
@@ -156,7 +214,7 @@ const styles = StyleSheet.create({
     fontFamily: 'space-mono'
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 15,
   },
   elevatedViewContainer: {
     width: Dimensions.get('window').width - 40,

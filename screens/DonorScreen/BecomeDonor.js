@@ -14,7 +14,7 @@ const BloodTypes = t.enums({
   Aminus: 'A-',
   Bplus: 'B+',
   Bminus: 'B-',
-  Olus: 'O+',
+  Oplus: 'O+',
   Ominus: 'O-',
   ABplus: 'AB+',
   ABminus: 'AB-',
@@ -60,7 +60,6 @@ const options = {
 
 export default function BecomeDonor(props) {
 
-  const [donor, setDonor] = React.useState([])
   const [disableButton, setDisableButton] = React.useState(false);
 
   function handleSubmit () {
