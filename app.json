@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "plasma-covid",
-    "slug": "plasma-covid",
+    "name": "Covid Plasma Pakistan",
+    "slug": "PCF",
     "platforms": [
       "ios",
       "android",
