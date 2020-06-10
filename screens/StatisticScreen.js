@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ActivityIndicator, Dimensions } from 'react-nat
 import { ScrollView } from 'react-native-gesture-handler';
 import ElevatedView from 'react-native-elevated-view';
 import { FontAwesome, AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import LottieView  from "lottie-react-native";
 
 export default function StatisticScreen() {
   
@@ -14,6 +15,7 @@ export default function StatisticScreen() {
   }, [])
 
   async function fetchData () {
+    setFetching(true);
     const data = await fetch('https://corona.lmao.ninja/v2/countries/pakistan');
     const stats = await data.json();
     setFetching(false);
@@ -25,9 +27,13 @@ export default function StatisticScreen() {
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Pakistan Statistics</Text>
       </View>
-      {fetching ? <ActivityIndicator/> :
+      {fetching ? <LottieView
+          autoPlay
+          loop
+          source={require('../assets/animations/waitting.json')}
+        /> :
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
-        <ElevatedView elevation={10} style={styles.casesContainer}>
+        <ElevatedView elevation={10} style={[styles.cardContainer, {backgroundColor: '#3B8BEB'}]}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
               <FontAwesome name="bed" size={80} color="white" style={{marginLeft: 20}} />
@@ -48,7 +54,28 @@ export default function StatisticScreen() {
             </View>
           </View>
         </ElevatedView>
-        <ElevatedView elevation={10} style={styles.recoveredContainer} >
+        <ElevatedView elevation={10} style={[styles.cardContainer, {backgroundColor: '#B23850'}]} >
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <FontAwesome5 name="band-aid" size={70} color="white" style={{marginLeft: 20}} />
+            </View>
+            <View style={{marginRight: Dimensions.get('window').width / 8}}>
+              <Text style={styles.title}>
+                Total Death
+              </Text>
+              <Text style={styles.value}>
+                {covidData.deaths}
+              </Text>
+              <Text style={styles.title}>
+                Death Today
+              </Text>
+              <Text style={styles.value}>
+                {covidData.todayDeaths}
+              </Text>
+            </View>
+          </View>
+        </ElevatedView>
+        <ElevatedView elevation={10} style={styles.cardContainer} >
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
               <AntDesign name="heart" size={80} color="white" style={{marginLeft: 20}} />
@@ -65,27 +92,6 @@ export default function StatisticScreen() {
               </Text>
               <Text style={styles.value}>
                 {covidData.todayRecovered}
-              </Text>
-            </View>
-          </View>
-        </ElevatedView>
-        <ElevatedView elevation={10} style={styles.deathContainer} >
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <FontAwesome5 name="band-aid" size={70} color="white" style={{marginLeft: 20}} />
-            </View>
-            <View style={{marginRight: Dimensions.get('window').width / 8}}>
-              <Text style={styles.title}>
-                Total Deaths
-              </Text>
-              <Text style={styles.value}>
-                {covidData.deaths}
-              </Text>
-              <Text style={styles.title}>
-                Deaths Today
-              </Text>
-              <Text style={styles.value}>
-                {covidData.todayDeaths}
               </Text>
             </View>
           </View>
@@ -113,29 +119,11 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
-  casesContainer: {
-    width: Dimensions.get('window').width - 40,
-    height: 200,
-    marginLeft: 20,
-    backgroundColor: '#3B8BEB',
-    borderRadius: 20,
-    justifyContent: 'space-evenly',
-    marginBottom: 10
-  },
-  recoveredContainer: {
+  cardContainer: {
     width: Dimensions.get('window').width - 40,
     height: 200,
     marginLeft: 20,
     backgroundColor: '#00887A',
-    borderRadius: 20,
-    justifyContent: 'space-evenly',
-    marginBottom: 10
-  },
-  deathContainer: {
-    width: Dimensions.get('window').width - 40,
-    height: 200,
-    marginLeft: 20,
-    backgroundColor: '#B23850',
     borderRadius: 20,
     justifyContent: 'space-evenly',
     marginBottom: 10
@@ -148,6 +136,6 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 15,
     fontFamily: 'space-mono',
-    color: 'white'
+    // color: 'white'
   }
 });

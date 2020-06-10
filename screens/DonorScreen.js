@@ -7,6 +7,7 @@ import ElevatedView from 'react-native-elevated-view';
 import Toast from 'react-native-root-toast';
 import * as firebase from 'firebase';
 import { Dropdown } from 'react-native-material-dropdown';
+import LottieView  from "lottie-react-native";
 
 import BecomeDonor from './DonorScreen/BecomeDonor';
 import DeleteInformation from './DonorScreen/DeleteInformation';
@@ -33,7 +34,7 @@ const actions = [
 
 export default function DonorScreen() {
   
-  const [loadingData, setLoadingData] = useState(true); 
+  const [loadingData, setLoadingData] = useState(false); 
   const [data, setData] = useState([]);
   const [showBecomeDonor, setShowBecomeDonor] = useState(false);
   const [showDeleteInformation, setShowDeleteInformation] = useState(false);
@@ -62,6 +63,7 @@ export default function DonorScreen() {
   const pakCities = cities;
 
   useEffect(() => {
+    setLoadingData(true);
     firebase.database().ref("donors").on('value', async function (snapshot) {
       if (snapshot.val()) {
         let fetchedData = Object.values(snapshot.val());
@@ -135,35 +137,23 @@ export default function DonorScreen() {
     }
   }
 
-  function filterCityData (value) {
-    setFilterCity(value);
+  function LoadingAnimation() {
+    return (
+      <View style={{flex: 1}}>
+        <LottieView
+          autoPlay
+          loop
+          source={require('../assets/animations/loading.json')}
+        /> 
+      </View>
+    )
   }
-  
-  return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>Covid Plasma Finder</Text>
-      </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
-          <Dropdown
-            ref={c => blood = c}
-            label='Select Blood Type'
-            data={bloodTypes}
-            onChangeText={value => setFilterBlood(value)}
-          />
-        </View>
-        <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
-          <Dropdown
-            label='Select City'
-            data={pakCities}
-            onChangeText={value =>   setFilterCity(value)}
-          />
-        </View>
-      </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
-        {loadingData ? <ActivityIndicator/> :
-          data.map((item, index) => <ElevatedView elevation={3} style={styles.elevatedViewContainer} key={index}>
+
+  function DataEmptyOrNot() {
+    if (data.length > 0) {
+      return (
+         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
+          {data.map((item, index) => <ElevatedView elevation={3} style={styles.elevatedViewContainer} key={index}>
             <View style={styles.nameContainer}>
               <MaterialIcons name="person" size={20} color="white" />
               <Text style={styles.personName}>{item.name}</Text>
@@ -180,9 +170,44 @@ export default function DonorScreen() {
               <MaterialIcons name="contact-phone" size={20} color="white"/>
               <Text style={styles.contactNumber}>{`+92${item.contactNumber}`}</Text>
             </View>
-          </ElevatedView>)
-        }
+          </ElevatedView>)}
       </ScrollView>
+      )
+    } else {
+      return (
+        <View style={{flex: 1}}>
+          <LottieView
+            autoPlay
+            loop
+            source={require('../assets/animations/empty.json')}
+          /> 
+        </View>
+      )
+    }
+  }
+  
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Covid Plasma Finder</Text>
+      </View>
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
+          <Dropdown
+            label='Select Blood Type'
+            data={bloodTypes}
+            onChangeText={value => setFilterBlood(value)}
+          />
+        </View>
+        <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>
+          <Dropdown
+            label='Select City'
+            data={pakCities}
+            onChangeText={value =>   setFilterCity(value)}
+          />
+        </View>
+      </View>
+      {loadingData ? <LoadingAnimation/> : <DataEmptyOrNot/>}
       <FloatingAction
         actions={actions}
         floatingIcon={<Feather name="plus" size={40} color="white"/>}
