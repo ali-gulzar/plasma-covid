@@ -4,6 +4,8 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
 import * as firebase from 'firebase';
+import cities from '../../assets/cities/data.json';
+
 
 const Form = t.form.Form;
 
@@ -18,10 +20,12 @@ const BloodTypes = t.enums({
   ABminus: 'AB-',
 });
 
+const Cities = t.enums(cities);
+
 const Donor = t.struct({
   name: t.String,
   bloodType: BloodTypes,
-  location: t.String,
+  location: Cities,
   contactNumber: t.Number
 });
 
