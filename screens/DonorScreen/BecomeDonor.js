@@ -4,7 +4,6 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
 import * as firebase from 'firebase';
-import Toast from 'react-native-root-toast';
 
 import cities from '../../assets/cities/data.json';
 
@@ -30,15 +29,6 @@ const Donor = t.struct({
   contactNumber: t.Number
 });
 
-
-const formStyles = {
-  ...Form.stylesheet,
-  controlLabel: {
-    error: {
-      color: 'black'
-    }
-  }
-}
 
 const options = {
   fields: {

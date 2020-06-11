@@ -8,7 +8,7 @@ import LottieView  from "lottie-react-native";
 export default function StatisticScreen() {
   
   const [fetching, setFetching] = useState(true);
-  const [covidData, setCovidData] = useState({});
+  const [apiData, setApiData] = useState({});
 
   useEffect(() => {
     fetchData();
@@ -19,7 +19,7 @@ export default function StatisticScreen() {
     const data = await fetch('https://corona.lmao.ninja/v2/countries/pakistan');
     const stats = await data.json();
     setFetching(false);
-    setCovidData(stats);
+    setApiData(stats);
   }
 
   return (
@@ -43,13 +43,13 @@ export default function StatisticScreen() {
                 Total Recoveries
               </Text>
               <Text style={styles.value}>
-                {covidData.recovered}
+                {apiData.recovered}
               </Text>
               <Text style={styles.title}>
                 Recoveries Today
               </Text>
               <Text style={styles.value}>
-                {covidData.todayRecovered}
+                {apiData.todayRecovered}
               </Text>
             </View>
           </View>
@@ -64,13 +64,13 @@ export default function StatisticScreen() {
                 Total Cases
               </Text>
               <Text style={styles.value}>
-                {covidData.cases}
+                {apiData.cases}
               </Text>
               <Text style={styles.title}>
                 Cases Today
               </Text>
               <Text style={styles.value}>
-                {covidData.todayCases}
+                {apiData.todayCases}
               </Text>
             </View>
           </View>
@@ -85,13 +85,13 @@ export default function StatisticScreen() {
                 Total Death
               </Text>
               <Text style={styles.value}>
-                {covidData.deaths}
+                {apiData.deaths}
               </Text>
               <Text style={styles.title}>
                 Death Today
               </Text>
               <Text style={styles.value}>
-                {covidData.todayDeaths}
+                {apiData.todayDeaths}
               </Text>
             </View>
           </View>

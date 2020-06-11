@@ -39,7 +39,7 @@ const options = {
       error: 'Please select your blood type.'
     },
     contactNumber: {
-      error: 'Please provide a valid phone number so that patients can contact you.',
+      error: 'Please provide a valid phone number.',
       maxLength: 11
     },
   },

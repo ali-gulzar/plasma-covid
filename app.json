@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Covid Plasma Pakistan",
-    "slug": "PCF",
+    "name": "Plasma Pakistan",
+    "slug": "PP",
     "platforms": [
       "ios",
       "android",
@@ -29,7 +29,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "android": {
-      "package": "com.mag.covidplasmapakistan",
+      "package": "com.mag.plasmapakistan",
       "versionCode": 1
     }
   }
