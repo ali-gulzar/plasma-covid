@@ -142,11 +142,7 @@ export default function DonorScreen() {
   function LoadingAnimation() {
     return (
       <View style={{flex: 1}}>
-        <LottieView
-          autoPlay
-          loop
-          source={require('../assets/animations/loading.json')}
-        /> 
+        <ActivityIndicator size="large"/>
       </View>
     )
   }
