@@ -187,7 +187,7 @@ export default function DonorScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Plasma Pakistan</Text>
+        <Text style={styles.header}>Plasma Finder Pakistan</Text>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <View style={{flex: 1, marginLeft: 10, marginRight: 10}}>

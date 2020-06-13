@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
 import * as firebase from 'firebase';
@@ -71,7 +71,7 @@ export default function DeleteInformation(props) {
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Delete Information</Text>
         <ElevatedView elevation={10}>
-          <TouchableOpacity onPress={() => props.close("delete", "close")}>
+          <TouchableOpacity onPress={() => props.close("delete", "close")} style={styles.closeModalButton}>
             <View style={styles.closeModalButton}>
               <Text style={{color: 'white'}}>X</Text>
             </View>

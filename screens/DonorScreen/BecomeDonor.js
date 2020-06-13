@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard, Alert } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, Dimensions, ActivityIndicator, Keyboard, Alert, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 import ElevatedView from 'react-native-elevated-view';
 import * as firebase from 'firebase';
